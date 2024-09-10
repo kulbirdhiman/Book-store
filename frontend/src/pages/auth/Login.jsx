@@ -1,6 +1,20 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
+import { useState } from 'react';
+import { useLoginMutation } from "../../redux/api/userAPiSlice";
+import { trackForMutations } from '@reduxjs/toolkit/dist/immutableStateInvariantMiddleware';
+
 const Login = () => {
+  const [email, setEmail] = useState("");
+  const [Password, setPassword] = useState("");
+  const [login] = useLoginMutation();
+  const loginfrom = async()=>{
+    try {
+      await login({username,Password}).unwrap()
+    } catch (error) {
+      
+    }
+  }
   return (
     <section className='h-screen flex justify-center items-center text-white'>
           <div className='w-[30rem] border  p-4 rounded' >

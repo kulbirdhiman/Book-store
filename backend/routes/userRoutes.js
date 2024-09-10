@@ -15,8 +15,8 @@ import express from "express";
 const router = express.Router();
 router.route("/").post(createUser).get(getAllUsers)
 router.route("/login").post(loginUser)
-router.route("/logut").post(logoutCurrentUser)
+router.route("/logout").post(logoutCurrentUser)
 router.route("/profile").get(authUser, getCurrentUserProfile)
-router.route("/update").put(updateCurrentUserProfile)
+router.route("/update").put(authUser,updateCurrentUserProfile)
 
 export default router;

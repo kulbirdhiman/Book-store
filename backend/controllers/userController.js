@@ -36,28 +36,28 @@ const createUser = expressAsyncHandler(async (req, res) => {
 
 const loginUser = expressAsyncHandler(async (req, res) => {
   const { email, password } = req.body;
-
-  console.log(email);
-  console.log(password);
-
   const existingUser = await User.findOne({ email });
+  if(!existingUser) throw new Error("user not found")
+  if ( !email || !password) {
+    throw new Error("Please fill all the inputs.");
+  }
 
   if (existingUser) {
     const isPasswordValid = await bcrypt.compare(
       password,
       existingUser.password
     );
-
+    if(!isPasswordValid) res.status(404).json({message : "password incorrect"})
     if (isPasswordValid) {
       createToken(res, existingUser._id);
 
-      res.status(201).json({
+      res.status(202).json({
         _id: existingUser._id,
         username: existingUser.username,
         email: existingUser.email,
         isAdmin: existingUser.isAdmin,
       });
-      return;
+      
     }
   }
 });
